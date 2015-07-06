@@ -1,0 +1,48 @@
+---
+title: "ticket time analysis"
+author: "Andrew Ba Tran"
+date: "July 5, 2015"
+output: html_document
+---
+
+This is an early analysis of traffic ticket data focusing on time of day. 
+
+Needs confirmation on time zone before proceeding.
+
+The data is from the [Connecticut Racial Profiling Prohibition Project](http://ctrp3.ctdata.org/rawdata/) hosted at the [CT Data Collaborative](http://ctdata.org/) which collects traffic incident reports between October 2013 and September 2014.
+
+```{r, echo=FALSE}
+library(lubridate)
+library(ggplot2)
+```
+
+
+```{r}
+# Bringing the data in
+incidents <- read.csv("incidents_slim.csv", stringsAsFactors=FALSE)
+
+# This is a slightly smaller version of the original version
+# If the original raw data is what you prefer, use this command instead of the one above
+# incidents <- read.csv("http://ctrp3viz.s3.amazonaws.com/data/Connecticut_r1.csv", stringsAsFactors=FALSE)
+
+# Cleaning up the dates and time
+incidents$RealDate <- as.POSIXct(as.Date(incidents$InterventionDateTime, origin="1899-12-30"))
+incidents$RealTime <- format(as.POSIXct((incidents$InterventionTime) * 86400, origin = "1970-01-01"), "%H:%M")
+incidents$RealTime <- hm(incidents$RealTime)
+incidents$Hour <- hour(incidents$RealTime)
+incidents$Hour2 <- hour(incidents$RealDate)
+incidents$Day.of.Week <- as.factor(incidents$Day.of.Week)
+levels(incidents$Day.of.Week) <- c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+
+# Histogram time
+c <- ggplot(incidents, aes(x=Hour2))
+c <- c + geom_histogram(colour="darkred",fill="white", binwidth=1)
+c
+
+#Let's break it out by day
+c <- ggplot(incidents, aes(x=Hour2))
+c <- c + geom_histogram(colour="darkred",fill="white", binwidth=1)
+c + facet_grid(Day.of.Week ~ .)
+
+```
+

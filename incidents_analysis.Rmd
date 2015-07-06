@@ -1,0 +1,216 @@
+---
+title: "Traffic tickets in Connecticut overview"
+author: "Andrew Ba Tran"
+date: "July 3, 2015"
+output: html_document
+---
+
+An analysis for the TrendCT story: [When do police most often ticket drivers? And for what?](http://trendct.org/2015/07/06/police-tickets-in-connecticut/).
+
+The data is from the [Connecticut Racial Profiling Prohibition Project](http://ctrp3.ctdata.org/rawdata/) hosted at the [CT Data Collaborative](http://ctdata.org/) which collects traffic incident reports between October 2013 and September 2014.
+
+```{r, echo=FALSE}
+library(lubridate)
+library(ggplot2)
+library(knitr)
+```
+
+
+```{r}
+# Bringing the data in
+incidents <- read.csv("incidents_slim.csv", stringsAsFactors=FALSE)
+
+# This is a slightly smaller version of the original version
+# If the original raw data is what you prefer, use this command instead of the one above
+# incidents <- read.csv("http://ctrp3viz.s3.amazonaws.com/data/Connecticut_r1.csv", stringsAsFactors=FALSE)
+```
+
+## Most popular ticket type
+
+```{r}
+c <- ggplot(incidents, aes(x=StatutoryReasonForStop))
+c <- c + geom_histogram(colour="darkred",fill="white", binwidth=1)
+c + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+# Cleaning up the dates and time
+incidents$RealDate <- as.POSIXct(as.Date(incidents$InterventionDateTime, origin="1899-12-30"))
+incidents$RealTime <- format(as.POSIXct((incidents$InterventionTime) * 86400, origin = "1970-01-01"), "%H:%M")
+incidents$RealTime <- hm(incidents$RealTime)
+incidents$Day.of.Week <- as.factor(incidents$Day.of.Week)
+levels(incidents$Day.of.Week) <- c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+```
+
+## Which month has the most tickets?
+
+```{r}
+incidents$month <- month(incidents$RealDate, label=TRUE)
+
+c <- ggplot(incidents, aes(x=month))
+c <- c + geom_histogram(colour="darkred",fill="white", binwidth=1)
+c
+```
+
+## Which day of the week gets the most tickets?
+
+```{r}
+c <- ggplot(incidents, aes(x=Day.of.Week))
+c <- c + geom_histogram(colour="darkred",fill="white", binwidth=1)
+c
+```
+
+## Which specific day of the year gets the most tickets? 
+
+```{r}
+incidents$calendar <- floor_date(incidents$RealDate, "day")
+
+cal_days <- data.frame(table(incidents$calendar))
+colnames(cal_days) <- c("Date", "Tickets")
+library(dygraphs)
+library(xts)
+
+# This is to convert the time series into another format called eXtensible Time Series
+tix <- xts(cal_days[,-1],order.by=as.POSIXct(cal_days$Date))
+colnames(tix) <- "Tickets"
+dygraph(tix, main="Tickets by day in Connecticut") %>%
+  dyOptions(stepPlot = TRUE, fillGraph=TRUE) %>%
+  dyRangeSelector()
+```
+
+## 10 days that got the most tickets
+
+```{r}
+kable(head(cal_days[order(-cal_days$Tickets),],10))
+
+#Most day of the month gets the most tickets?
+incidents$day_num <- day(incidents$RealDate)
+c <- ggplot(incidents, aes(x=day_num))
+c <- c + geom_histogram(colour="darkred",fill="white", binwidth=1)
+c
+
+# That's not very useful-- 11 months of the year have 30 days while half of that has 31.
+# Let's try to be more accurate
+
+# Let's focus on the last week, first week, and everything in between as middle weeks. 
+# What's the average ticket per day based on those categories?
+
+incidents$cal_month <- floor_date(incidents$RealDate, "month")
+cal_months <- data.frame(table(incidents$cal_month))
+
+incidents$cal_week <- floor_date(incidents$RealDate, "week")
+
+cal_week <- data.frame(table(incidents$cal_week))
+
+incidents$cal_days <- days_in_month(incidents$RealDate)
+
+incidents$day_num <- day(incidents$RealDate)
+
+day_num <- data.frame(sort(table(incidents$day_num), descending=TRUE))
+
+longmonth <- subset(incidents, cal_days==31)
+midmonth <- subset(incidents, cal_days==30)
+shortmonth <- subset(incidents, cal_days==28)
+
+##31 DAY MONTH ANALYSIS HERE
+longmonth_end <- subset(longmonth, (day_num==25 | day_num==26 | day_num==27 | 
+                                      day_num==28 | day_num==29 | day_num==30 | day_num==31))
+
+last_seven_long <- nrow(longmonth_end)/7
+
+longmonth_start <- subset(longmonth, (day_num==1 | day_num==2 | day_num==3 | 
+                                      day_num==4 | day_num==5 | day_num==6 | day_num==7))
+
+first_seven_long <- nrow(longmonth_start)/7
+
+longmonth_mid <- subset(longmonth, (day_num!=1 & day_num!=2 & day_num!=3 & 
+                                        day_num!=4 & day_num!=5 & day_num!=6 & day_num!=7 &
+                                      day_num!=25 & day_num!=26 & day_num!=27 & 
+                                      day_num!=28 & day_num!=29 & day_num!=30 & day_num!=31))
+
+mid_seven_long <- nrow(longmonth_mid)/17
+```
+
+### Average number of tickets per day in a 31 day month
+
+```{r}
+avg_long <- data.frame(first_seven_long, mid_seven_long, last_seven_long)
+colnames(avg_long) <- c("First week", "Middle weeks", "Last week")
+kable(avg_long)
+```
+
+
+
+```{r}
+##30 DAY MONTH ANALYSIS HERE
+midmonth_end <- subset(midmonth, (day_num==24 | day_num==25 | day_num==26 | 
+                                      day_num==27 | day_num==28 | day_num==29 | day_num==30))
+
+last_seven_mid <- nrow(midmonth_end)/7
+
+midmonth_start <- subset(midmonth, (day_num==1 | day_num==2 | day_num==3 | 
+                                        day_num==4 | day_num==5 | day_num==6 | day_num==7))
+
+first_seven_mid <- nrow(midmonth_start)/7
+
+midmonth_mid <- subset(midmonth, (day_num!=1 & day_num!=2 & day_num!=3 & 
+                                      day_num!=4 & day_num!=5 & day_num!=6 & day_num!=7 &
+                                      day_num!=24 & day_num!=25 & day_num!=26 & 
+                                      day_num!=27 & day_num!=28 & day_num!=29 & day_num!=30))
+
+mid_seven_mid <- nrow(midmonth_mid)/16
+
+```
+
+### Average number of tickets per day in a 30 day month
+
+```{r}
+avg_mid <- data.frame(first_seven_mid, mid_seven_mid, last_seven_mid)
+colnames(avg_mid) <- c("First week", "Middle weeks", "Last week")
+kable(avg_mid)
+```
+
+
+
+```{r}
+##FEBRUARY ANALYSIS HERE
+shortmonth_end <- subset(shortmonth, (day_num==22 | day_num==23 | day_num==24 | 
+                                    day_num==25 | day_num==26 | day_num==27 | day_num==28))
+
+last_seven_short <- nrow(shortmonth_end)/7
+
+shortmonth_start <- subset(shortmonth, (day_num==1 | day_num==2 | day_num==3 | 
+                                      day_num==4 | day_num==5 | day_num==6 | day_num==7))
+
+first_seven_short <- nrow(shortmonth_start)/7
+
+shortmonth_mid <- subset(shortmonth, (day_num!=1 & day_num!=2 & day_num!=3 & 
+                                    day_num!=4 & day_num!=5 & day_num!=6 & day_num!=7 &
+                                    day_num!=22 & day_num!=23 & day_num!=24 & 
+                                    day_num!=25 & day_num!=26 & day_num!=27 & day_num!=28))
+
+mid_seven_short <- nrow(shortmonth_mid)/14
+```
+
+### Average number of tickets per day in February
+
+```{r}
+avg_short <- data.frame(first_seven_short, mid_seven_short, last_seven_short)
+colnames(avg_short) <- c("First week", "Middle weeks", "Last week")
+kable(avg_short)
+```
+
+
+### Average (of the averages) number of tickets per day based on time of month
+```{r}
+avg_last <- (last_seven_short+last_seven_mid+last_seven_long)/3
+avg_mid <- (mid_seven_short+mid_seven_mid+mid_seven_long)/3
+avg_start<- (first_seven_short+first_seven_mid+first_seven_long)/3
+
+avg <- data.frame(avg_start, avg_mid, avg_last)
+colnames(avg) <- c("First week", "Middle weeks", "Last weeks")
+kable(avg)
+```
+
+### Overall, it looks like the daily average of tickets increases through the month.
+#### Except in months with 30 days of the year. Then the trend reverses.
+
+
