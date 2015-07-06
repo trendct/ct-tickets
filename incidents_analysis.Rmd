@@ -17,12 +17,9 @@ library(knitr)
 
 
 ```{r}
-# Bringing the data in
-incidents <- read.csv("incidents_slim.csv", stringsAsFactors=FALSE)
+# Bringing the data in. This is a huge file. Brace yourself.
 
-# This is a slightly smaller version of the original version
-# If the original raw data is what you prefer, use this command instead of the one above
-# incidents <- read.csv("http://ctrp3viz.s3.amazonaws.com/data/Connecticut_r1.csv", stringsAsFactors=FALSE)
+incidents <- read.csv("http://ctrp3viz.s3.amazonaws.com/data/Connecticut_r1.csv", stringsAsFactors=FALSE)
 ```
 
 ## Most popular ticket type
