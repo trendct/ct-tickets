@@ -2,7 +2,7 @@ library(lubridate)
 library(ggplot2)
 library(stringr)
 library(dplyr)
-#incidents_all <- read.csv("http://ctrp3viz.s3.amazonaws.com/data/Connecticut_r1.csv", stringsAsFactors=FALSE)
+incidents_all <- read.csv("http://ctrp3viz.s3.amazonaws.com/data/Connecticut_r1.csv", stringsAsFactors=FALSE)
 
 #incidents <- incidents_all[c("Department.Name", "ReportingOfficerIdentificationID", 
                              "Day.of.Week", "SubjectRaceCode", "SubjectEthnicityCode",
@@ -20,19 +20,16 @@ incidents <- read.csv("incidents_slim.csv", stringsAsFactors=FALSE)
 
 incidents$RealDate <- as.POSIXct(as.Date(incidents$InterventionDateTime, origin="1899-12-30"))
 
-incidents$RealTime <- format(as.POSIXct((incidents$InterventionTime) * 86400, origin = "1970-01-01"), "%H:%M")
+incidents$RealTime <- format(as.POSIXct((incidents$InterventionTime) * 86400, origin = "America/Montserrat", tz="EST"), "%H:%M")
 
-incidents$RealTime <- hm(incidents$RealTime)
+incidents$Hour <- hour(incidents$RealDate)
 
-incidents$Hour <- hour(incidents$RealTime)
-
-incidents$Hour2 <- hour(incidents$RealDate)
 
 incidents$Day.of.Week <- as.factor(incidents$Day.of.Week)
 levels(incidents$Day.of.Week) <- c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
 
 # Histogram time
-c <- ggplot(incidents, aes(x=Hour2))
+c <- ggplot(incidents, aes(x=Hour))
 c <- c + geom_histogram(colour="darkred",fill="white", binwidth=1)
 c
 
@@ -44,13 +41,14 @@ c + facet_grid(Day.of.Week ~ .)
 
 # Let's look at rate per department employment
 pers <- read.csv("police_dept.csv", stringsAsFactors=FALSE)
+pers$sworn <- pers$sworn.male+ pers$sworn.female
 incidents_by_dept <- data.frame(table(incidents$Department.Name))
 colnames(incidents_by_dept) <- c("name", "incidents")
 incidents_by_dept$name <- toupper(incidents_by_dept$name)
 
 incidents_by_dept <- left_join(incidents_by_dept, pers)
 
-incidents_by_dept$inc.rate <- round((incidents_by_dept$incidents/incidents_by_dept$total), digits=2)
+incidents_by_dept$inc.rate <- round((incidents_by_dept$incidents/incidents_by_dept$sworn), digits=2)
 
 reordered <- incidents_by_dept[order(incidents_by_dept$inc.rate),]
 
