@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<metadata>
+	<idinfo>
+		<citation>
+			<citeinfo>
+				<origin>U.S. Department of Commerce, U.S. Census Bureau, Geography Division</origin>
+				<pubdate>2010</pubdate>
+				<title>TIGER/Line Shapefile, 2010,  state, Connecticut, Primary and Secondary Roads State-based Shapefile</title>
+				<edition>2010</edition>
+				<geoform>vector digital data</geoform>
+				<ftname Sync="TRUE">primarysecondaryroadct_37800_0000_2010_s100_census_1_shp_wgs84</ftname><onlink>http://magic.lib.uconn.edu/magic_2/vector/37800/primarysecondaryroadct_37800_0000_2010_s100_census_1_shp.zip</onlink><onlink>http://www.census.gov/geo/www/tiger</onlink></citeinfo>
+		</citation>
+		<descript>
+			<abstract>The TIGER/Line Files are shapefiles and related database files (.dbf) that are an extract of selected geographic and cartographic information from the U.S. Census Bureau's Master Address File / Topologically Integrated Geographic Encoding and Referencing (MAF/TIGER) Database (MTDB).  The MTDB represents a seamless national file with no overlaps or gaps between parts, however, each TIGER/Line File is designed to stand alone as an independent data set, or they can be combined to cover the entire nation.  Primary roads are generally divided, limited-access highways within the interstate highway system or under State management, and are distinguished by the presence of interchanges.  These highways are accessible by ramps and may include some toll highways.  The MAF/TIGER Feature Classification Code (MTFCC) is S1100 for primary roads.  Secondary roads are main arteries, usually in the U.S. Highway, State Highway, and/or County Highway system.  These roads have one or more lanes of traffic in each direction, may or may not be divided, and usually have at-grade intersections with many other roads and driveways.  They usually have both a local name and a route number.  The MAF/TIGER Feature Classification Code (MTFCC) is S1200 for secondary roads.  
+</abstract>
+			<purpose>In order for others to use the information in the Census MAF/TIGER database in a geographic information system (GIS) or for other geographic applications, the Census Bureau releases to the public extracts of the database in the form of TIGER/Line Shapefiles.</purpose>
+			<Subject_Entity>Connecticut(09)</Subject_Entity>
+			<langdata Sync="TRUE">en</langdata></descript>
+		<timeperd>
+			<timeinfo>
+				<rngdates>
+					<begdate>201001</begdate>
+					<enddate>201007</enddate>
+				</rngdates>
+			</timeinfo>
+			<current>publication date</current>
+		</timeperd>
+		<status>
+			<progress>Complete</progress>
+			<update>TIGER/Line Shapefiles are extracted from the Census MAF/TIGER database.  No changes or updates will be made to this version of the TIGER/Line Shapefiles.  Future releases of TIGER/Line Shapefiles will reflect updates made to the Census MAF/TIGER database.</update>
+		</status>
+		<spdom>
+			<bounding>
+				<westbc>-73.727775</westbc>
+				<eastbc>-71.787239</eastbc>
+				<northbc>42.050587</northbc>
+				<southbc>40.950943</southbc>
+			</bounding>
+			<lboundng><leftbc Sync="TRUE">-73.718060</leftbc><rightbc Sync="TRUE">-71.788804</rightbc><bottombc Sync="TRUE">40.994284</bottombc><topbc Sync="TRUE">42.050484</topbc></lboundng></spdom>
+		<keywords>
+			<theme>
+				<themekt>ISO 19115 Topic Categories</themekt>
+				<themekey>transportation</themekey>
+			</theme>
+			<theme>
+				<themekt>None</themekt>
+				<themekey>State or equivalent entity</themekey>
+				<themekey>Linear Feature</themekey>
+				<themekey>Address Range</themekey>
+				<themekey>Street Centerline</themekey>
+				<themekey>Road Feature</themekey>
+				<themekey>Roads</themekey>
+			</theme>
+			<place>
+				<placekt>INCITS.38-200x (R2004),INCITS.31-200x (R2007),INCITS.454-200x,INCITS 455-200x,INCITS 446-2008</placekt>
+				<placekey>United States</placekey>
+				<placekey>U.S.</placekey>
+				<placekey>State or Equivalent Entity</placekey>
+				<placekey>Connecticut</placekey>
+				<placekey>CT</placekey>
+				<placekey>09</placekey>
+			</place>
+		</keywords>
+		<accconst>None</accconst>
+		<useconst>The TIGER/Line Shapefile products are not copyrighted however TIGER/Line and Census TIGER are registered trademarks of the U.S. Census Bureau.  These products are free to use in a product or publication, however acknowledgement must be given to the U.S. Census Bureau as the source.
+The horizontal spatial accuracy information present in these files is provided for the purposes of statistical analysis and census operations only.  No warranty, expressed or implied is made with regard to the accuracy of the spatial accuracy, and no liability is assumed by the U.S. Government in general or the U.S. Census Bureau, specifically as to the spatial or attribute accuracy of the data.  The TIGER/Line Shapefiles may not be suitable for high-precision measurement applications such as engineering problems, property transfers, or other uses that might require highly accurate measurements of the earth's surface.Coordinates in the TIGER/Line shapefiles have six implied decimal places, but the positional accuracy of these coordinates is not as great as the six decimal places suggest.</useconst>
+		<Title_13_Restrictions>Yes, the data are free from Title 13 restrictions</Title_13_Restrictions>
+		<ptcontac>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>U.S. Department of Commerce, U.S. Census Bureau, Geography Division, Geographic Products Branch</cntorg>
+				</cntorgp>
+				<cntaddr>
+					<addrtype>Mailing address</addrtype>
+					<address>4600 Silver Hill Road, Stop 7400</address>
+					<city>Washington</city>
+					<state>DC</state>
+					<postal>20233-7400</postal>
+					<country>United States</country>
+				</cntaddr>
+				<cntvoice>301-763-1128</cntvoice>
+				<cntfax>301-763-4710</cntfax>
+				<cntemail>geo.tiger@census.gov</cntemail>
+			</cntinfo>
+		</ptcontac>
+		<native Sync="TRUE">Microsoft Windows XP Version 5.1 (Build 2600) Service Pack 3; ESRI ArcCatalog 9.3.0.1770</native><natvform Sync="TRUE">Shapefile</natvform></idinfo>
+	<Data_Set_Character_Set>8859part1</Data_Set_Character_Set>
+	<Data_Set_Language>eng</Data_Set_Language>
+	<dataqual>
+		<attracc>
+			<attraccr>Accurate against Federal Information Processing Standards (FIPS), FIPS Publication 6-4, and FIPS-55 at the 100% level for the codes and base names.  The remaining attribute information has been examined but has not been fully tested for accuracy.</attraccr>
+		</attracc>
+		<logic>There may be some inconsistencies in feature names along features.  An anomaly exists with the sporadic occurrence of road segments comprising a complete chain with different MAF/TIGER Feature Census Class Code (MTFCC) values assigned.  This problem could affect applications that use the MTFCC values for network analysis, routing, or for assigning symbology to a feature when creating a map.
+The Census Bureau performed automated tests to ensure logical consistency and limits of shapefiles.  Node/geometry and topology relationships are collected or generated to satisfy topological edit requirements.  These requirements include:
+(1) Complete chains must begin and end at nodes.
+(2) Complete chains must connect to each other at nodes.
+(3) Complete chains do not extend through nodes.
+(4) Left and right polygons are defined for each complete chain element and are consistent throughout the extract process.
+(5) The chains representing the limits of the files are free of gaps.</logic>
+		<complete>Data completeness of the TIGER/Line Shapefiles reflects the contents of the Census MAF/TIGER database at the time the TIGER/Line Shapefiles were created.</complete>
+		<posacc>
+			<horizpa>
+				<horizpar>The Census Bureau uses Global Positioning System (GPS) coordinates at road centerline intersections to evaluate the horizontal spatial accuracy of source files that may be used to realign road features in the MAF/TIGER database and test the horizontal spatial accuracy of the road features in the TIGER/Line Shapefiles.  The test compares a survey-grade GPS coordinate to its associated road centerline intersection in the TIGER/Line Shapefiles.  The test is based on an independent collection of GPS coordinates for a random sample of road intersections from a centerline file that meet certain criteria.  The points are referred to as the sample points and are gathered through a private contractor working for the Census Bureau.  Since the collection method uses survey-quality GPS-based field techniques, the resulting control points are considered 'ground truth' against which the TIGER road centerline intersection coordinates are compared.  The distances between the coordinates are calculated and the Census Bureau determines the Circular Error 95% (CE95).  That is, the accuracy of the file in meters with 95% confidence.  The CE95 can be calculated from the mean and standard deviation by using the formula: mean of differences plus (2.65 times the standard deviation).  CE95 results reported for each file tested are determined using a spreadsheet with embedded statistical formula.  The use and applicability of the spreadsheet and its embedded formula have been verified by Census Bureau statisticians.  The basis of the calculation is the use of the root mean square error (RMSE).  This is the method as stated in the U.S. Government's Federal Geographic Data Committee Standard FGDC-STD-007.3-1998, Geospatial Positioning Accuracy Standards.  Part 3: National Standard for Spatial Data Accuracy.  The results of using this measure of accuracy are in compliance with Federal Spatial Data requirements.  In terms of the Census Bureau application, the dataset coordinate values are those taken from the centerline file and the coordinate values from an independent source of higher accuracy are those acquired through the Census Bureau's contractor.  Please note that the horizontal spatial accuracy, where reported, refers only to the realigned road features identified as matched to the positionally accurate source file with that accuracy.  It is not the spatial accuracy of the TIGER/Line Shapefile as a whole.</horizpar>
+			</horizpa>
+		</posacc>
+		<lineage>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>U.S. Department of Commerce, U.S. Census Bureau, Geography Division</origin>
+						<pubdate>Unpublished material</pubdate>
+						<title>Census MAF/TIGER database</title>
+					</citeinfo>
+				</srccite>
+				<typesrc>online</typesrc>
+				<srctime>
+					<timeinfo>
+						<rngdates>
+							<begdate>201001</begdate>
+							<enddate>201007</enddate>
+						</rngdates>
+					</timeinfo>
+					<srccurr>publication date</srccurr>
+				</srctime>
+				<srccitea>MAF/TIGER</srccitea>
+				<srccontr>The selected geographic and cartographic information (line segments) are derived from the U.S. Census Bureau's Master Address File Topologically Integrated Geographic Encoding and Referencing (MAF/TIGER) database.</srccontr>
+			</srcinfo>
+			<procstep>
+				<procdesc>TIGER/Line Shapefiles are extracted from the Census MAF/TIGER database by nation, state, county, and entity.  Census MAF/TIGER data for all of the aforementioned geographic entities are then distributed among the shapefiles each containing attributes for line, polygon, or landmark geographic data. </procdesc>
+				<srcused>Census MAF/TIGER</srcused>
+				<procdate>2010</procdate>
+			</procstep>
+		</lineage>
+	</dataqual>
+	<spdoinfo>
+		<indspref>Federal Information Processing Standards (FIPS), ANSI, and feature names.</indspref>
+		<direct>Vector</direct>
+		<ptvctinf>
+			<sdtsterm Name="primarysecondaryroadct_37800_0000_2010_s100_census_1_shp_wgs84">
+				<sdtstype>Complete chain</sdtstype>
+				<ptvctcnt>4547</ptvctcnt>
+			</sdtsterm>
+			<esriterm Name="primarysecondaryroadct_37800_0000_2010_s100_census_1_shp_wgs84"><efeatyp Sync="TRUE">Simple</efeatyp><efeageom Sync="TRUE">Polyline</efeageom><esritopo Sync="TRUE">FALSE</esritopo><efeacnt Sync="TRUE">4547</efeacnt><spindex Sync="TRUE">TRUE</spindex><linrefer Sync="TRUE">FALSE</linrefer></esriterm></ptvctinf>
+	</spdoinfo>
+	<spref>
+		<horizsys>
+			<geograph>
+				<latres>0.000458</latres>
+				<longres>0.000458</longres>
+				<geogunit>Decimal degrees</geogunit>
+			</geograph>
+			<geodetic>
+				<horizdn>North American Datum of 1983 in the 48 contiguous states, the District of Columbia, Alaska, Hawaii, Puerto Rico, the Virgin Islands of the United States, and the Pacific Island Areas.</horizdn>
+				<ellips>Geodetic Reference System 80</ellips>
+				<semiaxis>6378137</semiaxis>
+				<denflat>298257</denflat>
+			</geodetic>
+			<cordsysn><geogcsn Sync="TRUE">GCS_WGS_1984</geogcsn></cordsysn></horizsys>
+	</spref>
+	<eainfo>
+		<detailed Name="primarysecondaryroadct_37800_0000_2010_s100_census_1_shp_wgs84">
+			<enttyp>
+				<enttypl>PRISECROADS.shp</enttypl>
+				<enttypd>Primary and Secondary Roads State-based</enttypd>
+				<enttypds>U.S. Census Bureau</enttypds>
+				<enttypt Sync="TRUE">Feature Class</enttypt><enttypc Sync="TRUE">4547</enttypc></enttyp>
+			<attr><attrlabl Sync="TRUE">FID</attrlabl><attalias Sync="TRUE">FID</attalias><attrtype Sync="TRUE">OID</attrtype><attwidth Sync="TRUE">4</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdef Sync="TRUE">Internal feature number.</attrdef><attrdefs Sync="TRUE">ESRI</attrdefs><attrdomv><udom Sync="TRUE">Sequential unique whole numbers that are automatically generated.</udom></attrdomv></attr><attr><attrlabl Sync="TRUE">Shape</attrlabl><attalias Sync="TRUE">Shape</attalias><attrtype Sync="TRUE">Geometry</attrtype><attwidth Sync="TRUE">0</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdef Sync="TRUE">Feature geometry.</attrdef><attrdefs Sync="TRUE">ESRI</attrdefs><attrdomv><udom Sync="TRUE">Coordinates defining the features.</udom></attrdomv></attr><attr>
+				<attrlabl>STATEFP</attrlabl>
+				<attrdef>Current state Federal Information Processing Standards (FIPS)
+                 code</attrdef>
+				<attrdefs>U.S. Census Bureau</attrdefs>
+				<attrdomv>
+					<codesetd>
+						<codesetn>INCITS.38-200x (R2004), Codes for the Identification of
+                      the States, the District of Columbia, Puerto Rico, and the
+                      Insular Areas of the United States (Formerly FIPS 5-2)</codesetn>
+						<codesets>U.S. Census Bureau</codesets>
+					</codesetd>
+				</attrdomv>
+				<attalias Sync="TRUE">STATEFP</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">2</attwidth></attr>
+			<attr>
+				<attrlabl>LINEARID</attrlabl>
+				<attrdef>Linear feature identifier</attrdef>
+				<attrdefs>U.S. Census Bureau</attrdefs>
+				<attrdomv>
+					<udom>data are unavailable</udom>
+				</attrdomv>
+				<attalias Sync="TRUE">LINEARID</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">22</attwidth></attr>
+			<attr>
+				<attrlabl>FULLNAME</attrlabl>
+				<attrdef>Concatenation of expanded text for prefix qualifier, prefix
+                 direction, prefix type, base name, suffix type, suffix
+                 direction, and suffix qualifier (as available) with a space
+                 between each expanded text field</attrdef>
+				<attrdefs>U.S. Census Bureau</attrdefs>
+				<attrdomv>
+					<udom>data are unavailable</udom>
+				</attrdomv>
+				<attalias Sync="TRUE">FULLNAME</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">100</attwidth></attr>
+			<attr>
+				<attrlabl>RTTYP</attrlabl>
+				<attrdef>Route type code</attrdef>
+				<attrdefs>U.S. Census Bureau</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>C</edomv>
+						<edomvd>County</edomvd>
+						<edomvds>U.S. Census Bureau</edomvds>
+					</edom>
+					<edom>
+						<edomv>I</edomv>
+						<edomvd>Insterstate</edomvd>
+						<edomvds>U.S. Census Bureau</edomvds>
+					</edom>
+					<edom>
+						<edomv>M</edomv>
+						<edomvd>Common Name</edomvd>
+						<edomvds>U.S. Census Bureau</edomvds>
+					</edom>
+					<edom>
+						<edomv>O</edomv>
+						<edomvd>Other</edomvd>
+						<edomvds>U.S. Census Bureau Enumerated_Domain:</edomvds>
+						<edomv>S</edomv>
+						<edomvd>State recognized</edomvd>
+						<edomvds>U.S. Census Bureau</edomvds>
+					</edom>
+					<edom>
+						<edomv>U</edomv>
+						<edomvd>U.S.</edomvd>
+						<edomvds>U.S. Census Bureau</edomvds>
+					</edom>
+				</attrdomv>
+				<attalias Sync="TRUE">RTTYP</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">1</attwidth></attr>
+			<attr>
+				<attrlabl>MTFCC</attrlabl>
+				<attrdef>MAF/TIGER feature class code</attrdef>
+				<attrdefs>U.S. Census Bureau</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>S1100</edomv>
+						<edomvd>Primary Road</edomvd>
+						<edomvds>U.S. Census Bureau</edomvds>
+					</edom>
+					<edom>
+						<edomv>S1200</edomv>
+						<edomvd>Secondary Road</edomvd>
+						<edomvds>U.S. Census Bureau</edomvds>
+					</edom>
+				</attrdomv>
+				<attalias Sync="TRUE">MTFCC</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">5</attwidth></attr>
+		</detailed>
+	</eainfo>
+	<distinfo>
+		<distrib>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>U.S. Department of Commerce, U.S. Census Bureau, Geography Division, Geographic Products Branch</cntorg>
+				</cntorgp>
+				<cntaddr>
+					<addrtype>Mailing address</addrtype>
+					<address>4600 Silver Hill Road, Stop 7400</address>
+					<city>Washington</city>
+					<state>DC</state>
+					<postal>20233-7400</postal>
+					<country>United States</country>
+				</cntaddr>
+				<cntvoice>301-763-1128</cntvoice>
+				<cntfax>301-763-4710</cntfax>
+				<cntemail>geo.tiger@census.gov</cntemail>
+			</cntinfo>
+		</distrib>
+		<distliab>No warranty, expressed or implied is made with regard to the accuracy of these data, and no liability is assumed by the U.S. Government in general or the U.S. Census Bureau in specific as to the spatial or attribute accuracy of the data.  The act of distribution shall not constitute any such warranty and no responsibility is assumed by the U.S. government in the use of these files.  The boundary information in the TIGER/Line Shapefiles is for statistical data collection and tabulation purposes only; their depiction and designation for statistical purposes do not constitute a determination of jurisdictional authority or rights of ownership or entitlement and they are not legal land descriptions.</distliab>
+		<stdorder>
+			<digform>
+				<digtinfo>
+					<formname>TGRSHP (compressed)</formname>
+					<filedec>PK-ZIP, version 1.93 A or higher</filedec>
+					<transize Sync="TRUE">5.378</transize><dssize Sync="TRUE">5.378</dssize></digtinfo>
+				<digtopt>
+					<onlinopt>
+						<computer>
+							<networka>
+								<networkr>http://www.census.gov/geo/www/tiger</networkr>
+							</networka>
+						</computer>
+					</onlinopt>
+					<offoptn>
+						<offmedia>DVD-ROM (Only if offered offline)</offmedia>
+						<recfmt>ISO 9660</recfmt>
+					</offoptn>
+				</digtopt>
+			</digform>
+			<fees>The online copy of the TIGER/Line files may be accessed without charge.</fees>
+			<ordering>To obtain more information about ordering TIGER/Line shapefiles visit http://www.census.gov/geo/www/tiger </ordering>
+		</stdorder>
+		<techpreq>The TIGER/Line shapefiles contain geographic data only and do not include display mapping software or statistical data.  For information on how to use the TIGER/Line shapefile data with specific software package users shall contact the company that produced the software.</techpreq>
+		<resdesc Sync="TRUE">Downloadable Data</resdesc></distinfo>
+	<metainfo>
+		<metd>20100507</metd>
+		<metc>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>U.S. Department of Commerce, U.S. Census Bureau, Geography Division, Geographic Products Branch</cntorg>
+					<cntper>REQUIRED: The person responsible for the metadata information.</cntper></cntorgp>
+				<cntaddr>
+					<addrtype>Mailing address</addrtype>
+					<address>4600 Silver Hill Road, Stop 7400</address>
+					<city>Washington</city>
+					<state>DC</state>
+					<postal>20233-7400</postal>
+					<country>United States</country>
+				</cntaddr>
+				<cntvoice>301-763-1128</cntvoice>
+				<cntfax>301-763-4710</cntfax>
+				<cntemail>geo.tiger@census.gov</cntemail>
+			</cntinfo>
+		</metc>
+		<metstdn>FGDC Content Standards for Digital Geospatial Metadata</metstdn>
+		<metstdv>FGDC-STD-001-1998</metstdv>
+		<Metadata_Character_Set>8859part1</Metadata_Character_Set>
+		<Metadata_File_Identifier>tl_2010_09_prisecroads.shp.xml</Metadata_File_Identifier>
+		<Metadata_Language>eng</Metadata_Language>
+		<langmeta Sync="TRUE">en</langmeta><mettc Sync="TRUE">local time</mettc><metextns><onlink Sync="TRUE">http://www.esri.com/metadata/esriprof80.html</onlink><metprof Sync="TRUE">ESRI Metadata Profile</metprof></metextns></metainfo>
+	<Esri><DataProperties><itemProps><itemLocation><linkage Sync="TRUE">file://\\LIB-MAGIC01\C$\CT_SDC\2000_and_2010_Files_Shapefile_Check\UpdatedFiles_MAGIC\Uploaded_Files_for_Magic_Download\Organized\primarysecondaryroadct_37800_2010_s100_census_1_shp\WGS84\primarysecondaryroadct_37800_2010_s100_census_1_shp_wgs84</linkage><protocol Sync="TRUE">Local Area Network</protocol></itemLocation></itemProps><copyHistory><copy source="C:\CT_SDC\2000_and_2010_Files_Shapefile_Check\UpdatedFiles_MAGIC\Uploaded_Files_for_Magic_Download\Organized\primarysecondaryroadct_37800_2010_s100_census_1_shp\primarysecondaryroadct_37800_2010_s100_census_1_shp_wgs84" dest="\\LIB-MAGIC01\C$\CT_SDC\2000_and_2010_Files_Shapefile_Check\UpdatedFiles_MAGIC\Uploaded_Files_for_Magic_Download\Organized\primarysecondaryroadct_37800_2010_s100_census_1_shp\WGS84\primarysecondaryroadct_37800_2010_s100_census_1_shp_wgs84" date="20110715" time="15142500"></copy></copyHistory><lineage><Process ToolSource="C:\Program Files\ArcGIS\Desktop10.0\ArcToolbox\Toolboxes\Data Management Tools.tbx\Project" Date="20110715" Time="123300">Project primarysecondaryroadct__37800_2010_s100_census_1_shp_wgs84 C:\CT_SDC\2000_and_2010_Files_Shapefile_Check\UpdatedFiles_MAGIC\Uploaded_Files_for_Magic_Download\WGS84\primarysecondaryroadct__37800_2010_s100_census_1_shp_wgs84.shp GEOGCS['GCS_WGS_1984',DATUM['D_WGS_1984',SPHEROID['WGS_1984',6378137.0,298.257223563]],PRIMEM['Greenwich',0.0],UNIT['Degree',0.0174532925199433]] NAD_1983_To_WGS_1984_1 GEOGCS['GCS_North_American_1983',DATUM['D_North_American_1983',SPHEROID['GRS_1980',6378137.0,298.257222101]],PRIMEM['Greenwich',0.0],UNIT['Degree',0.0174532925199433]]</Process></lineage></DataProperties><CreaDate>20110715</CreaDate><CreaTime>12330000</CreaTime><ArcGISFormat>1.0</ArcGISFormat><SyncOnce>FALSE</SyncOnce><SyncDate>20110802</SyncDate><SyncTime>11342000</SyncTime><ModDate>20110802</ModDate><ModTime>11342000</ModTime></Esri><dataIdInfo><envirDesc Sync="TRUE">Microsoft Windows XP Version 5.1 (Build 2600) Service Pack 3; ESRI ArcCatalog 9.3.0.1770</envirDesc><dataLang><languageCode Sync="TRUE" value="en"></languageCode></dataLang><idCitation><resTitle Sync="TRUE">primarysecondaryroadct_37800_0000_2010_s100_census_1_shp_wgs84</resTitle><presForm><PresFormCd Sync="TRUE" value="005"></PresFormCd></presForm></idCitation><spatRpType><SpatRepTypCd Sync="TRUE" value="001"></SpatRepTypCd></spatRpType><dataExt><geoEle><GeoBndBox esriExtentType="native"><westBL Sync="TRUE">-73.71806</westBL><eastBL Sync="TRUE">-71.788804</eastBL><northBL Sync="TRUE">42.050484</northBL><southBL Sync="TRUE">40.994284</southBL><exTypeCode Sync="TRUE">1</exTypeCode></GeoBndBox></geoEle></dataExt><geoBox esriExtentType="decdegrees"><westBL Sync="TRUE">-73.71806</westBL><eastBL Sync="TRUE">-71.788804</eastBL><northBL Sync="TRUE">42.050484</northBL><southBL Sync="TRUE">40.994284</southBL><exTypeCode Sync="TRUE">1</exTypeCode></geoBox></dataIdInfo><mdLang><languageCode Sync="TRUE" value="en"></languageCode></mdLang><mdStanName Sync="TRUE">ISO 19115 Geographic Information - Metadata</mdStanName><mdStanVer Sync="TRUE">DIS_ESRI1.0</mdStanVer><mdChar><CharSetCd Sync="TRUE" value="004"></CharSetCd></mdChar><mdHrLv><ScopeCd Sync="TRUE" value="005"></ScopeCd></mdHrLv><mdHrLvName Sync="TRUE">dataset</mdHrLvName><distInfo><distributor><distorTran><onLineSrc><orDesc Sync="TRUE">002</orDesc><linkage Sync="TRUE">file://\\library\archive\Magic2\vector\37800\primarysecondaryroadct_37800_0000_2010_s100_census_1_shp\WGS84\primarysecondaryroadct_37800_0000_2010_s100_census_1_shp_wgs84.shp</linkage><protocol Sync="TRUE">Local Area Network</protocol></onLineSrc><transSize Sync="TRUE">5.378</transSize></distorTran><distorFormat><formatName Sync="TRUE">Shapefile</formatName></distorFormat></distributor></distInfo><refSysInfo><RefSystem><refSysID><identCode Sync="TRUE">GCS_WGS_1984</identCode></refSysID></RefSystem></refSysInfo><spatRepInfo><VectSpatRep><topLvl><TopoLevCd Sync="TRUE" value="001"></TopoLevCd></topLvl><geometObjs Name="primarysecondaryroadct_37800_0000_2010_s100_census_1_shp_wgs84"><geoObjTyp><GeoObjTypCd Sync="TRUE" value="001"></GeoObjTypCd></geoObjTyp><geoObjCnt Sync="TRUE">4547</geoObjCnt></geometObjs></VectSpatRep></spatRepInfo><mdDateSt Sync="TRUE">20110802</mdDateSt></metadata>

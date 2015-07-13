@@ -1,0 +1,37 @@
+---
+title: "times_analysis"
+author: "Andrew Ba Tran"
+date: "July 13, 2015"
+output: html_document
+---
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+
+## Times when tickets are given in Connecticut
+
+```{r facet-histograms, fig.width=9, fig.height=60}
+c <- ggplot(incidents, aes(x=Hour))
+c <- c + geom_histogram(colour="darkred",fill="white", binwidth=1)
+c <- c + ggtitle("Frequency of tickets given over time in Connecticut")
+c <- c + ylab("Tickets")
+c
+dept_histograms <- c + facet_wrap(~Department.Name,ncol=3, scales="free")  
+dept_histograms
+```
+
+## Times for each district
+
+```{r facet-histograms, fig.width=9, fig.height=60}
+not_state <- subset(incidents, Department.Name!="State Police")
+c <- ggplot(not_state, aes(x=Hour))
+c <- c + geom_histogram(colour="darkred",fill="white", binwidth=1)
+c <- c + ggtitle("Frequency of tickets given over time by Department")
+c <- c + ylab("Tickets")
+dept_histograms <- c + facet_wrap(~Department.Name,ncol=3, scales="free")  
+dept_histograms
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

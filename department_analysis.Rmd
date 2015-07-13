@@ -1,0 +1,298 @@
+---
+title: "department_analysis"
+author: "Andrew Ba Tran"
+date: "July 10, 2015"
+output: html_document
+---
+
+An analysis for the TrendCT story: [Police departments that hand out the most traffic tickets in Connecticut](http://trendct.org/2015/07/13/police-departments-that-hand-out-the-most-traffic-tickets-in-connecticut/)
+
+The data is from the [Connecticut Racial Profiling Prohibition Project](http://ctrp3.ctdata.org/rawdata/) hosted at the [CT Data Collaborative](http://ctdata.org/) which collects traffic incident reports between October 2013 and September 2014.
+
+```{r}
+library(lubridate)
+library(ggplot2)
+library(dplyr)
+incidents <- read.csv("http://ctrp3viz.s3.amazonaws.com/data/Connecticut_r1.csv", stringsAsFactors=FALSE)
+
+# Fix times
+incidents$RealDate <- as.POSIXct(as.Date(incidents$InterventionDateTime, origin="1899-12-30"))
+incidents$RealTime <- format(as.POSIXct((incidents$InterventionTime) * 86400, origin = "1899-12-30", tz="America/Montserrat"), "%H:%M")
+incidents$Hour <- hour(incidents$RealDate)
+
+
+# Let's look at rate per department employment
+# First, let's bring in FBI Uniform Crime Report that lists 2013 department employment
+
+pers <- read.csv("police_dept.csv", stringsAsFactors=FALSE)
+
+# Calculate total sworn officers
+pers$sworn <- pers$sworn.male+ pers$sworn.female
+
+# Tallying tickets by department
+incidents_by_dept <- data.frame(table(incidents$Department.Name))
+colnames(incidents_by_dept) <- c("name", "incidents")
+incidents_by_dept$name <- toupper(incidents_by_dept$name)
+incidents_by_dept <- left_join(incidents_by_dept, pers)
+
+# Calculating tickets per officer
+incidents_by_dept$inc.rate <- round((incidents_by_dept$incidents/incidents_by_dept$sworn), digits=2)
+
+reordered <- incidents_by_dept[order(incidents_by_dept$inc.rate),]
+
+# Creating some stand-in data
+reordered$first_most <- "whatever"
+reordered$second_most <- "whatevs"
+reordered$pop_day <- "funday"
+reordered$pop_hour <- "fun o'clock"
+
+library(stringr)
+inc <- incidents
+inc$Department.Name <- str_to_upper(inc$Department.Name)
+
+# Loop to figure out first- and second-most ticketed offense
+# Also most popular day of the week and hour
+
+reo_list <- 1:nrow(reordered)
+
+for (i in reo_list) {
+  dept_name <- reordered$name[i]
+  sub <- subset(inc, Department.Name==dept_name)
+  sub_dat <- data.frame(table(sub$StatutoryReasonForStop))
+  sub_dat$Var1 <- as.character(sub_dat$Var1)
+  sub_dat <- sub_dat[order(-sub_dat$Freq),] 
+  reordered$first_most[i] <- sub_dat$Var1[1]
+  reordered$second_most[i] <- sub_dat$Var1[2]
+  sub_day <- data.frame(table(sub$Day.of.Week))
+  sub_day$Var1 <- as.character(sub_day$Var1)
+  sub_day <- sub_day[order(-sub_day$Freq),]
+  reordered$pop_day[i] <- sub_day$Var1[1]
+  sub_time <- data.frame(table(sub$Hour))
+  sub_time <- sub_time[order(-sub_time$Freq),] 
+  if (sub_time$Var1[1]==0) {
+    reordered$pop_hour[i] <- "12 am"
+    } else if (sub_time$Var1[1]==1) {
+    reordered$pop_hour[i] <- "1 am"
+    } else if (sub_time$Var1[1]==2) {
+    reordered$pop_hour[i] <- "2 am"
+    } else if (sub_time$Var1[1]==3) {
+    reordered$pop_hour[i] <- "3 am"
+    } else if (sub_time$Var1[1]==4) {
+    reordered$pop_hour[i] <- "4 am"
+    } else if (sub_time$Var1[1]==5) {
+    reordered$pop_hour[i] <- "5 am"
+    } else if (sub_time$Var1[1]==6) {
+    reordered$pop_hour[i] <- "6 am"
+    } else if (sub_time$Var1[1]==7) {
+    reordered$pop_hour[i] <- "7 am"
+    } else if (sub_time$Var1[1]==8) {
+    reordered$pop_hour[i] <- "8 am"
+    } else if (sub_time$Var1[1]==9) {
+    reordered$pop_hour[i] <- "9 am"
+    } else if (sub_time$Var1[1]==10) {
+    reordered$pop_hour[i] <- "10 am"
+    } else if (sub_time$Var1[1]==11) {
+    reordered$pop_hour[i] <- "11 am"
+    } else if (sub_time$Var1[1]==12) {
+    reordered$pop_hour[i] <- "12 pm"
+    } else if (sub_time$Var1[1]==13) {
+    reordered$pop_hour[i] <- "1 pm"
+    } else if (sub_time$Var1[1]==14) {
+    reordered$pop_hour[i] <- "2 pm"
+    } else if (sub_time$Var1[1]==15) {
+    reordered$pop_hour[i] <- "3 pm"
+    } else if (sub_time$Var1[1]==16) {
+    reordered$pop_hour[i] <- "4 pm"
+    } else if (sub_time$Var1[1]==17) {
+    reordered$pop_hour[i] <- "5 pm"
+    } else if (sub_time$Var1[1]==18) {
+    reordered$pop_hour[i] <- "6 pm"
+    } else if (sub_time$Var1[1]==19) {
+    reordered$pop_hour[i] <- "7 pm"
+    } else if (sub_time$Var1[1]==20) {
+    reordered$pop_hour[i] <- "8 pm"
+    } else if (sub_time$Var1[1]==21) {
+    reordered$pop_hour[i] <- "9 pm"
+    } else if (sub_time$Var1[1]==22) {
+    reordered$pop_hour[i] <- "10 pm"
+    } else if (sub_time$Var1[1]==23) {
+    reordered$pop_hour[i] <- "11 pm"
+    } else if (sub_time$Var1[1]==24) {
+    reordered$pop_hour[i] <- "12 am"
+    }
+  if (sub_time$Freq[1]==1) {
+    reordered$pop_hour[i] <- "Not enough data"
+  }
+}
+
+library(DT)
+for_table <- reordered[c("name", "incidents", "sworn", "inc.rate", "first_most", "second_most", "pop_day", "pop_hour")]
+colnames(for_table) <- c("Department", "Tickets", "Officers", "Tickets per officer", "Most common", "Second-most common", "Day", "Hour")
+datatable(for_table)
+```
+
+There were `r nrow(incidents)` traffic tickets total
+
+**Observations**
+
+* State police issue about 1/3 of all tickets in Connecticut
+* Newtown and Ridgefield wrote the most per-officer tickets
+* Stamford as a town police department, wrote the fewest number of tickets per officer.
+
+***
+
+### Which departments hands out the most speeding tickets? 
+*Minus state police
+
+```{r}
+library(knitr)
+speeding <- subset(incidents, StatutoryReasonForStop=="Speed Related")
+top_dept_speeding <- data.frame(sort(table(speeding$Department.Name), decreasing=TRUE))
+top_dept_speeding <- head(top_dept_speeding)
+colnames(top_dept_speeding) <- "speeding.tickets"
+kable(head(top_dept_speeding))
+
+top_dept_speeding$department <- rownames(top_dept_speeding)
+top_dept_speeding <- top_dept_speeding[-1,]
+ggplot(top_dept_speeding, aes(x=department, y=speeding.tickets)) +
+    geom_bar(colour="black", fill="red", stat="identity")
+```
+
+*Observations:*
+- Something
+- Something else
+
+****
+
+### Which departments writes the most citations for 'other'?
+*Minus state police
+
+```{r}
+other <- subset(incidents, StatutoryReasonForStop=="Other")
+top_dept_other <- data.frame(sort(table(other$Department.Name), decreasing=TRUE))
+top_dept_other <- head(top_dept_other)
+colnames(top_dept_other) <- "other.tickets"
+kable(head(top_dept_other))
+
+top_dept_other$department <- rownames(top_dept_other)
+top_dept_other <- top_dept_other[-1,]
+ggplot(top_dept_other, aes(x=department, y=other.tickets)) +
+    geom_bar(colour="black", fill="red", stat="identity")
+```
+
+*Observations:*
+- Something
+- Something else
+
+****
+
+### Which departments hands out the most tickets for cell phone use? 
+*Minus state police
+
+```{r}
+cell <- subset(incidents, StatutoryReasonForStop=="Cell Phone")
+top_dept_cell <- data.frame(sort(table(cell$Department.Name), decreasing=TRUE))
+top_dept_cell <- head(top_dept_cell)
+colnames(top_dept_cell) <- "cell.tickets"
+kable(head(top_dept_cell))
+
+top_dept_cell$department <- rownames(top_dept_cell)
+top_dept_cell <- top_dept_cell[-1,]
+ggplot(top_dept_cell, aes(x=department, y=cell.tickets)) +
+    geom_bar(colour="black", fill="red", stat="identity")
+```
+
+### Which departments hands out the most tickets for defective lights? 
+*Minus state police
+
+```{r}
+lights <- subset(incidents, StatutoryReasonForStop=="Defective Lights")
+top_dept_lights <- data.frame(sort(table(lights$Department.Name), decreasing=TRUE))
+top_dept_lights <- head(top_dept_lights)
+colnames(top_dept_lights) <- "lights.tickets"
+kable(head(top_dept_lights))
+
+top_dept_lights$department <- rownames(top_dept_lights)
+top_dept_lights <- top_dept_lights[-1,]
+ggplot(top_dept_lights, aes(x=department, y=lights.tickets)) +
+    geom_bar(colour="black", fill="red", stat="identity")
+```
+
+### Which departments hands out the most tickets for Display of Plates? 
+*Minus state police
+
+```{r}
+plates <- subset(incidents, StatutoryReasonForStop=="Display of Plates")
+top_dept_plates <- data.frame(sort(table(plates$Department.Name), decreasing=TRUE))
+top_dept_plates <- head(top_dept_plates)
+colnames(top_dept_plates) <- "plates.tickets"
+kable(head(top_dept_plates))
+
+top_dept_plates$department <- rownames(top_dept_plates)
+top_dept_plates <- top_dept_plates[-1,]
+ggplot(top_dept_plates, aes(x=department, y=plates.tickets)) +
+    geom_bar(colour="black", fill="red", stat="identity")
+```
+
+### Which departments hands out the most tickets for Registration? 
+*Minus state police
+
+```{r}
+regi <- subset(incidents, StatutoryReasonForStop=="Registration")
+top_dept_regi <- data.frame(sort(table(regi$Department.Name), decreasing=TRUE))
+top_dept_regi <- head(top_dept_regi)
+colnames(top_dept_regi) <- "regi.tickets"
+kable(head(top_dept_regi))
+
+top_dept_regi$department <- rownames(top_dept_regi)
+top_dept_regi <- top_dept_regi[-1,]
+ggplot(top_dept_regi, aes(x=department, y=regi.tickets)) +
+    geom_bar(colour="black", fill="red", stat="identity")
+```
+
+### Which departments hands out the most tickets for Stop Sign? 
+*Minus state police
+
+```{r}
+stop <- subset(incidents, StatutoryReasonForStop=="Stop Sign")
+top_dept_stop <- data.frame(sort(table(stop$Department.Name), decreasing=TRUE))
+top_dept_stop <- head(top_dept_stop)
+colnames(top_dept_stop) <- "stop.tickets"
+kable(head(top_dept_stop))
+
+top_dept_stop$department <- rownames(top_dept_stop)
+top_dept_stop <- top_dept_stop[-1,]
+ggplot(top_dept_stop, aes(x=department, y=stop.tickets)) +
+    geom_bar(colour="black", fill="red", stat="identity")
+```
+
+## Mapping out the tickets per employee by department headquarter
+
+```{r map, fig.width=9, fig.height=5}
+library(leaflet)
+
+depts <- read.csv("Police_Department_Map.csv", stringsAsFactors=FALSE)
+depts <- left_join(reordered, depts)
+depts$Location <- gsub("\\)","",depts$Location)
+depts$Location <- gsub("\\(","",depts$Location)
+depts$Lng <- sub(".*,","",depts$Location)
+depts$Lat <- sub(",.*","",depts$Location)
+
+depts$Lng <- as.numeric(depts$Lng)
+depts$Lat <- as.numeric(depts$Lat)
+
+depts <- subset(depts, !is.na(Lat))
+binpald <- colorBin("Blues", depts$inc.rate, 6, pretty = FALSE)
+
+
+town_popup <- paste('<strong>',depts$name,'</strong><br>Traffic tickets per officer: ',depts$inc.rate)
+
+m <- leaflet(depts) %>% addTiles('http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>') %>% 
+    setView(-72.690940, 41.651426, zoom = 9) %>% 
+    addCircles(~Lng, ~Lat, popup=town_popup, weight = 2, fillOpacity=.7, fillColor=~binpald(inc.rate), color = '#000000', radius=~sqrt(depts$inc.rate)*300) %>%
+  addLegend("bottomright", pal=binpald, values=~inc.rate,
+            title="Traffic tickets per officer",
+            opacity = 1 )
+ 
+m
+```
