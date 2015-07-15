@@ -18,10 +18,9 @@ incidents_all <- read.csv("http://ctrp3viz.s3.amazonaws.com/data/Connecticut_r1.
 
 incidents <- read.csv("incidents_slim.csv", stringsAsFactors=FALSE)
 
+# Fix times
 incidents$RealDate <- as.POSIXct(as.Date(incidents$InterventionDateTime, origin="1899-12-30"))
-
-incidents$RealTime <- format(as.POSIXct((incidents$InterventionTime) * 86400, origin = "America/Montserrat", tz="EST"), "%H:%M")
-
+incidents$RealTime <- format(as.POSIXct((incidents$InterventionTime) * 86400, origin = "1899-12-30", tz="America/Montserrat"), "%H:%M")
 incidents$Hour <- hour(incidents$RealDate)
 
 
@@ -34,7 +33,7 @@ c <- c + geom_histogram(colour="darkred",fill="white", binwidth=1)
 c
 
 #Let's break it out by day
-c <- ggplot(incidents, aes(x=Hour2))
+c <- ggplot(incidents, aes(x=Hour))
 c <- c + geom_histogram(colour="darkred",fill="white", binwidth=1)
 c + facet_grid(Day.of.Week ~ .)
 
