@@ -1,0 +1,216 @@
+---
+title: "warnings_analysis"
+author: "Andrew Ba Tran"
+date: "July 15, 2015"
+output: html_document
+---
+
+An [analysis](http://trendct.github.io/ct-tickets/warnings_analysis.html) for the TrendCT story: [Who gets off with a warning after a traffic stop in Connecticut?](http://trendct.org/2015/07/16/who-gets-off-with-a-warning-after-a-traffic-stop-in-connecticut)
+
+The data is from the [Connecticut Racial Profiling Prohibition Project](http://ctrp3.ctdata.org/rawdata/) hosted at the [CT Data Collaborative](http://ctdata.org/) which collects traffic incident reports between October 2013 and September 2014.
+
+```{r}
+library(lubridate)
+library(ggplot2)
+library(dplyr)
+library(DT)
+library(knitr)
+
+incidents <- read.csv("http://ctrp3viz.s3.amazonaws.com/data/Connecticut_r1.csv", stringsAsFactors=FALSE)
+
+warnings <- incidents[grepl("Warn",incidents$InterventionDispositionReasonText),]
+
+# Hm, only 18 departments. Let's take a look at them as a whole
+
+the18 <- subset(incidents, Department.Name=="Brookfield" | Department.Name=="CAPITOL POLICE" | 
+                Department.Name=="Coventry" | Department.Name=="Derby" | Department.Name == "East Hampton" |
+                Department.Name=="Easton" | Department.Name=="Middlebury" | Department.Name == "Naugatuck" |
+                Department.Name=="Plymouth" | Department.Name=="Redding" | Department.Name == "SCSU" |
+                Department.Name=="Seymour" | Department.Name=="Suffield" | Department.Name == "Thomaston" |
+                Department.Name=="Weston" | Department.Name=="Windsor Locks" | Department.Name == "Winsted" |
+                Department.Name=="Wolcott")
+
+kable(head(the18[,1:6]))
+```
+
+**Observations**
+
+* There were `r nrow(the18)` traffic stops in this data set
+
+***
+
+## OK, let's split up the dataset to those with warnings and those without
+
+
+```{r}
+
+the18_non <- the18[!grepl("Warn",the18$InterventionDispositionReasonText),]
+the18_inc <- data.frame(table(the18$StatutoryReasonForStop))
+colnames(the18_inc) <- c("citation", "total")
+
+the18_warn <- data.frame(table(warnings$StatutoryReasonForStop))
+colnames(the18_warn) <- c("citation", "warnings")
+the18_df <- left_join(the18_inc, the18_warn)
+
+the18_df$percent_warning <- round((the18_df$warnings/the18_df$total)*100, digits=2)
+
+datatable(the18_df)
+```
+
+**Observations**
+
+* Police were more lenient on drivers who were pulled over for defective lights, display of plates, and window tint
+* Police were most harsh on drivers pulled over for a suspended license. 
+* Only 6 percent of those pulled over got away with a warning
+* Driving without a license, without wearing a seatbelt or while using a cell phone also lead to many more tickets than warnings. 
+* Registration violations also prompt a high proportion of tickets to warnings.
+
+***
+
+## Stats on each department that gave out warnings
+
+```{r}
+
+department <- data.frame(table(the18$Department.Name))
+colnames(department) <- c("Department", "Total.Incidents")
+dept_non <- data.frame(table(the18_non$Department.Name))
+colnames(dept_non) <- c("Department", "Total.Tickets")
+dept_warn <- data.frame(table(warnings$Department.Name))
+colnames(dept_warn) <- c("Department", "Total.Warnings")
+department <- left_join(department, dept_non)
+department <- left_join(department, dept_warn)
+department$percent.tickets <- round((department$Total.Tickets/department$Total.Incidents)*100, digits=2)
+department$percent.warnings <- round((department$Total.Warnings/department$Total.Incidents)*100, digits=2)
+write.csv(department, "department_warnings.csv")
+datatable(department)
+```
+
+**Observations**
+
+* Suffield gives out the most warnings of any town. Nearly 90 percent of all traffic stops lead to a warning
+* Middlebury is also nearly as generous
+* Windsor Locks, Coventry, and Thomaston are not nearly as nice. More than 60 percent of their stops end with tickets.
+
+***
+
+## Interesting. Ok let's look at age
+
+```{r}
+warnings$SubjectAge <- as.numeric(warnings$SubjectAge)
+the18_non$SubjectAge <- as.numeric(the18_non$SubjectAge)
+forkable <- data.frame(table(warnings$SubjectAge))
+colnames(forkable) <- c("Age", "Tickets")
+datatable(forkable)
+```
+
+### Oh gross. The ages are pretty messed up. Have to take out the weird ones
+
+```{r}
+warningsb <- subset(warnings, SubjectAge > 0 & SubjectAge < 100)
+# That takes out about 600 from warnings
+the18_nonb <- subset(the18_non, SubjectAge > 0 & SubjectAge < 100)
+# That takes out about 60 for ticketed
+
+```
+
+* Average age for drivers getting warnings is `r mean(warningsb$SubjectAge)` 
+* Average age for drivers getting tickets is `r mean(the18_nonb$SubjectAge)` 
+
+***
+
+## Plotting out warnings by age
+
+```{r warn, fig.width=8, fig.height=5}
+c <- ggplot(warningsb, aes(x=SubjectAge))
+c <- c + geom_histogram(colour="darkred",fill="white", binwidth=1)
+c
+```
+
+## Plotting out tickets by age
+
+```{r tix, fig.width=8, fig.height=5}
+c <- ggplot(the18_nonb, aes(x=SubjectAge))
+c <- c + geom_histogram(colour="darkred",fill="white", binwidth=1)
+c
+
+```
+
+## Does age change between men and women for tickets or warnings?
+
+```{r charts, fig.width=8, fig.height=5}
+# All tickets
+gender18 <- data.frame(table(the18_nonb$SubjectAge,the18_nonb$SubjectSexCode))
+colnames(gender18) <- c("age", "gender", "tickets")
+ggplot(gender18, aes(age, y=tickets, group=gender, colour=gender)) +
+  ggtitle("Tickets by gender total") +
+  geom_line() +
+  geom_point()
+
+ggplot(gender18, aes(age, tickets, group=gender, fill=gender)) + ggtitle("Tickets by gender as a percent") + geom_area(position="fill")
+
+# Warnings
+genderw <- data.frame(table(warningsb$SubjectAge,warningsb$SubjectSexCode))
+colnames(genderw) <- c("age", "gender", "tickets")
+ggplot(genderw, aes(age, y=tickets, group=gender, colour=gender)) +
+  ggtitle("Warnings by gender total") +
+  geom_line() +
+  geom_point()
+
+ggplot(genderw, aes(age, tickets, group=gender, fill=gender)) + ggtitle("Warnings by gender as a percent") + geom_area(position="fill") 
+
+```
+
+## OK, age of driver doesn't mean much
+
+```{r}
+all_gender <- data.frame(table(the18_non$SubjectSexCode))
+warning_gender <- data.frame(table(warnings$SubjectSexCode))
+
+all_gender$perc <- round((all_gender$Freq/sum(all_gender$Freq))*100, digits=2)
+warning_gender$perc <- round((warning_gender$Freq/sum(warning_gender$Freq))*100, digits=2)
+kable(warning_gender)
+
+```
+
+## What about race? 
+
+```{r}
+#Have to refer to the data dictionary here...
+all_race$perc <- round((all_race$Freq/sum(all_race$Freq))*100, digits=2)
+the18$Race <- paste(the18$SubjectRaceCode, the18$SubjectEthnicityCode)
+
+index <- c("A H", "A M", "A N", "B H", "B M", "B N", 
+           "I H", "I M", "I N", "W H", "W M", "W N")
+
+values <- c("Hispanic", "Middle Eastern", "Asian", "Hispanic", "Middle Eastern", "Black", 
+            "Hispanic", "Middle Eastern", "Indian", "Hispanic", "Middle Eastern", "White")
+
+# for all
+the18$Def_Race <- values[match(the18$Race, index)]
+all_race <- data.frame(table(the18$Def_Race))
+colnames(all_race) <- c("race", "incidents")
+all_race$percent_incidents <- (all_race$incidents/sum(all_race$incidents))*100
+all_race$percent_incidents <- round(all_race$percent_incidents, digits=2)
+
+# for all minus warnings
+the18_non$Race <- paste(the18_non$SubjectRaceCode, the18_non$SubjectEthnicityCode)
+the18_non$Def_Race <- values[match(the18_non$Race, index)]
+all_race_non <- data.frame(table(the18_non$Def_Race))
+colnames(all_race_non) <- c("race", "tickets")
+all_race_non$percent_tickets <- (all_race_non$tickets/sum(all_race_non$tickets))*100
+all_race_non$percent_tickets <- round(all_race_non$percent_tickets, digits=2)
+
+# now just for those who got warnings
+warnings$Race <- paste(warnings$SubjectRaceCode, warnings$SubjectEthnicityCode)
+warnings$Def_Race <- values[match(warnings$Race, index)]
+all_race_warn <- data.frame(table(warnings$Def_Race))
+colnames(all_race_warn) <- c("race", "warnings")
+all_race_warn$percent_warnings <- (all_race_warn$warnings/sum(all_race_warn$warnings))*100
+all_race_warn$percent_warnings <- round(all_race_warn$percent_warnings, digits=2)
+
+all <- left_join(all_race, all_race_non)
+all <- left_join(all, all_race_warn)
+write.csv(all, "race_warnings.csv")
+kable(all)
+
+```
