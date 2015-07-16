@@ -240,29 +240,6 @@ warning_gender$perc <- round((warning_gender$Freq/sum(warning_gender$Freq))*100,
 
 #Gender of driver doesn't mean anything, either
 
-# What about race? Have to refer to the data dictionary here...
-all_race <- data.frame(table(incidents$SubjectRaceCode))
-
-all_race$perc <- round((all_race$Freq/sum(all_race$Freq))*100, digits=2)
-
-##SubjectEthnicityCode
-
-warning_race <- data.frame(table(warnings$SubjectRaceCode))
-warning_race$perc <- round((warning_race$Freq/sum(warning_race$Freq))*100, digits=2)
-
-# Alright, looks like blacks get less percent warnings compared to all tickets
-
-# Ethnicity now
-
-all_ethnicity <- data.frame(table(incidents$SubjectEthnicityCode))
-
-all_ethnicity$perc <- round((all_ethnicity$Freq/sum(all_ethnicity$Freq))*100, digits=2)
-
-##SubjectEthnicityCode
-
-warning_ethnicity <- data.frame(table(warnings$SubjectEthnicityCode))
-warning_ethnicity$perc <- round((warning_ethnicity$Freq/sum(warning_ethnicity$Freq))*100, digits=2)
-
 # Male vs female and race all?
 
 mfrace_all <- data.frame(table(incidents$SubjectSexCode, incidents$SubjectRaceCode))
@@ -286,8 +263,138 @@ warnings_all$perc_f_all <- round((warnings_all$F/sum(warnings_all$F))*100, digit
 warnings_all$perc_m_all <- round((warnings_all$M/sum(warnings_all$M))*100, digits=2)
 
 # looking at another column for warnings
-warned_extra <- incidents[grepl("WARN",incidents$final_infr2),]
+#warned_extra <- incidents[grepl("WARN",incidents$final_infr2),]
 
+warned_extra <- incidents[grepl("WARN",incidents$StatuteCodeIdentificationID),]
+warned_extra2 <- incidents[grepl("WARN",incidents$StatutatoryCitationPostStop),]
+
+warned_extra3 <- incidents[grepl("Warn",incidents$StatutatoryCitationPostStop),]
+warned_extra3b <- incidents[grepl("Warn",incidents$StatuteCodeIdentificationID),]
+
+warned_extra4 <- incidents[grepl("warn",incidents$StatutatoryCitationPostStop),]
+warned_extra4b <- incidents[grepl("warn",incidents$StatuteCodeIdentificationID),]
+
+warning_extra5 <- incidents[grepl("Warn",incidents$InterventionDispositionReasonText),]
+warning_extra5 <- incidents[grepl("Warn",incidents$InterventionDispositionReasonText),]
+
+# Hm, only 18 departments. Let's take a look at them as a whole
+
+the18 <- subset(incidents, Department.Name=="Brookfield" | Department.Name=="CAPITOL POLICE" | 
+                Department.Name=="Coventry" | Department.Name=="Derby" | Department.Name == "East Hampton" |
+                Department.Name=="Easton" | Department.Name=="Middlebury" | Department.Name == "Naugatuck" |
+                Department.Name=="Plymouth" | Department.Name=="Redding" | Department.Name == "SCSU" |
+                Department.Name=="Seymour" | Department.Name=="Suffield" | Department.Name == "Thomaston" |
+                Department.Name=="Weston" | Department.Name=="Windsor Locks" | Department.Name == "Winsted" |
+                Department.Name=="Wolcott")
+
+the18_non <- the18[!grepl("Warn",the18$InterventionDispositionReasonText),]
+
+the18_inc <- data.frame(table(the18$StatutoryReasonForStop))
+colnames(the18_inc) <- c("citation", "total")
+
+the18_warn <- data.frame(table(warning_extra5$StatutoryReasonForStop))
+colnames(the18_warn) <- c("citation", "warnings")
+the18_df <- left_join(the18_inc, the18_warn)
+
+the18_df$percent_warning <- round((the18_df$warnings/the18_df$total)*100, digits=2)
+
+# Interesting. Ok let's look at age
+
+warning_extra5$SubjectAge <- as.numeric(warning_extra5$SubjectAge)
+mean(warning_extra5$SubjectAge)
+the18_non$SubjectAge <- as.numeric(the18_non$SubjectAge)
+mean(the18_non$SubjectAge, na.rm=TRUE)
+
+median(warning_extra5$SubjectAge)
+median(the18_non$SubjectAge, na.rm=TRUE)
+
+# Oh God. The data on age is so messed up. Have to take out the weird ones
+
+warning_extra5b <- subset(warning_extra5, SubjectAge > 0 & SubjectAge < 100)
+
+# That takes out about 600 from warnings
+mean(warning_extra5b$SubjectAge)
+
+the18_nonb <- subset(the18_non, SubjectAge > 0 & SubjectAge < 100)
+mean(the18_nonb$SubjectAge, na.rm=TRUE)
+
+# That takes out about 60 for ticketed
+
+# Plot it out
+c <- ggplot(warning_extra5b, aes(x=SubjectAge))
+c <- c + geom_histogram(colour="darkred",fill="white", binwidth=1)
+c
+
+c <- ggplot(the18_nonb, aes(x=SubjectAge))
+c <- c + geom_histogram(colour="darkred",fill="white", binwidth=1)
+c
+
+# Does age change between men and women?
+
+# All tickets
+gender18 <- data.frame(table(the18_nonb$SubjectAge,the18_nonb$SubjectSexCode))
+colnames(gender18) <- c("age", "gender", "tickets")
+ggplot(gender18, aes(age, y=tickets, group=gender, colour=gender)) +
+  geom_line() +
+  geom_point()
+
+ggplot(gender18, aes(age, tickets, group=gender, fill=gender)) + geom_area(position="fill")
+
+# Warnings
+genderw <- data.frame(table(warning_extra5b$SubjectAge,warning_extra5b$SubjectSexCode))
+colnames(genderw) <- c("age", "gender", "tickets")
+ggplot(genderw, aes(age, y=tickets, group=gender, colour=gender)) +
+  geom_line() +
+  geom_point()
+
+ggplot(genderw, aes(age, tickets, group=gender, fill=gender)) + geom_area(position="fill")
+
+# OK, age of driver doesn't mean much
+all_gender <- data.frame(table(the18_non$SubjectSexCode))
+warning_gender <- data.frame(table(warning_extra5$SubjectSexCode))
+
+all_gender$perc <- round((all_gender$Freq/sum(all_gender$Freq))*100, digits=2)
+warning_gender$perc <- round((warning_gender$Freq/sum(warning_gender$Freq))*100, digits=2)
+
+
+# What about race? Have to refer to the data dictionary here...
+
+all_race$perc <- round((all_race$Freq/sum(all_race$Freq))*100, digits=2)
+the18$Race <- paste(the18$SubjectRaceCode, the18$SubjectEthnicityCode)
+
+index <- c("A H", "A M", "A N", "B H", "B M", "B N", 
+           "I H", "I M", "I N", "W H", "W M", "W N")
+
+
+values <- c("Hispanic", "Middle Eastern", "Asian", "Hispanic", "Middle Eastern", "Black", 
+            "Hispanic", "Middle Eastern", "Indian", "Hispanic", "Middle Eastern", "White")
+
+# for all
+the18$Def_Race <- values[match(the18$Race, index)]
+all_race <- data.frame(table(the18$Def_Race))
+colnames(all_race) <- c("race", "incidents")
+all_race$percent_incidents <- (all_race$incidents/sum(all_race$incidents))*100
+all_race$percent_incidents <- round(all_race$percent_incidents, digits=2)
+
+# for all minus warnings
+the18_non$Race <- paste(the18_non$SubjectRaceCode, the18_non$SubjectEthnicityCode)
+the18_non$Def_Race <- values[match(the18_non$Race, index)]
+all_race_non <- data.frame(table(the18_non$Def_Race))
+colnames(all_race_non) <- c("race", "tickets")
+all_race_non$percent_tickets <- (all_race_non$tickets/sum(all_race_non$tickets))*100
+all_race_non$percent_tickets <- round(all_race_non$percent_tickets, digits=2)
+
+# now just for those who got warnings
+warning_extra5$Race <- paste(warning_extra5$SubjectRaceCode, warning_extra5$SubjectEthnicityCode)
+warning_extra5$Def_Race <- values[match(warning_extra5$Race, index)]
+all_race_warn <- data.frame(table(warning_extra5$Def_Race))
+colnames(all_race_warn) <- c("race", "warnings")
+all_race_warn$percent_warnings <- (all_race_warn$warnings/sum(all_race_warn$warnings))*100
+all_race_warn$percent_warnings <- round(all_race_warn$percent_warnings, digits=2)
+
+all <- left_join(all_race, all_race_non)
+all <- left_join(all, all_race_warn)
+kagle(all)
 
 
 #Let's see which day of the year had the most tickets
