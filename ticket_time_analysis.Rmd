@@ -15,8 +15,7 @@ library(lubridate)
 library(ggplot2)
 
 # Bringing the data in. This is a large file. Brace yourself.
-#incidents <- read.csv("http://ctrp3viz.s3.amazonaws.com/data/Connecticut_r1.csv", stringsAsFactors=FALSE)
-
+incidents <- read.csv("http://ctrp3viz.s3.amazonaws.com/data/Connecticut_r1.csv", stringsAsFactors=FALSE)
 
 # Cleaning up the dates and time
 incidents$RealDate <- as.POSIXct(as.Date(incidents$InterventionDateTime, origin="1899-12-30"))
