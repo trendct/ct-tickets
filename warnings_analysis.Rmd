@@ -75,7 +75,7 @@ warnings_df$tickets <- warnings_df$total - warnings_df$warnings
 warnings_df$perc_warnings <- round((warnings_df$warnings/warnings_df$total)*100, digits=2)
 warnings_df$perc_tickets <- 100 - warnings_df$perc_warnings
 warnings_df_table <- warnings_df[c("Department", "total", "tickets", "warnings", "perc_tickets", "perc_warnings")]
-write.csv(warnings_df_table, "department_warnings.csv")
+write.csv(warnings_df_table, "data/department_warnings.csv")
 datatable(warnings_df_table)
 ```
 
@@ -193,6 +193,6 @@ colnames(race_df) <- c("Race", "Type", "Freq")
 race_df_spread <- race_df %>% spread(Type, Freq)
 race_df_spread$perc_ticket <- round((race_df_spread$Ticket/(race_df_spread$Ticket+race_df_spread$Warning))*100, digits=2)
 race_df_spread$perc_warning <- round((race_df_spread$Warning/(race_df_spread$Ticket+race_df_spread$Warning))*100, digits=2)
-write.csv(race_df_spread, "race_warnings.csv")
+write.csv(race_df_spread, "data/race_warnings.csv")
 kable(race_df_spread)
 ```

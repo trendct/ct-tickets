@@ -16,7 +16,7 @@ incidents_all <- read.csv("http://ctrp3viz.s3.amazonaws.com/data/Connecticut_r1.
                              "CustodialArrestIndicator", "InterventionDispositionReasonText",
                              "InterventionDateTime", "InterventionTime", "CreatedDate")]
 
-incidents <- read.csv("incidents_slim.csv", stringsAsFactors=FALSE)
+incidents <- read.csv("data/incidents_slim.csv", stringsAsFactors=FALSE)
 
 # Fix times
 incidents$RealDate <- as.POSIXct(as.Date(incidents$InterventionDateTime, origin="1899-12-30"))
@@ -39,7 +39,7 @@ c + facet_grid(Day.of.Week ~ .)
 
 
 # Let's look at rate per department employment
-pers <- read.csv("police_dept.csv", stringsAsFactors=FALSE)
+pers <- read.csv("data/police_dept.csv", stringsAsFactors=FALSE)
 pers$sworn <- pers$sworn.male+ pers$sworn.female
 incidents_by_dept <- data.frame(table(incidents$Department.Name))
 colnames(incidents_by_dept) <- c("name", "incidents")
@@ -69,7 +69,7 @@ c <- c + geom_histogram(colour="darkred",fill="white", binwidth=1)
 c
 
 # looking at infraction fees
-fees <- read.csv("infractions.csv", stringsAsFactors=FALSE)
+fees <- read.csv("data/infractions.csv", stringsAsFactors=FALSE)
 
 # all infractions
 ifr_list <- data.frame(table(incidents$StatuteCodeIdentificationID))
@@ -211,7 +211,7 @@ join2 <- right_join(stat_list, fees)
 #write.csv(join2,"join2.csv")
 #145 out of 1246 statutes. goddammit
 
-cleaned <- read.csv("cleaned-matched-infractions.csv", stringsAsFactors=FALSE)
+cleaned <- read.csv("data/cleaned-matched-infractions.csv", stringsAsFactors=FALSE)
 
 fees_totals <- fees[c("NAME","TOTAL", "CATEGORY", "DESCRIPTION")]
 

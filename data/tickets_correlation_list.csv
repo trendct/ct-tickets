@@ -1,0 +1,32 @@
+"","row_name","corre"
+"1","Average daily traffic",0.467604456971579
+"2","Number of roads",0.589142927596596
+"3","Number of interstate roads",0.531082111264179
+"4","Number of arterials: Freeways and expressways",0.38064961032637
+"5","Number of arterials: Other",0.484812326706311
+"6","Minor arterial roads",0.357556111261937
+"7","Major collector roads",0.272528435069926
+"8","Minor collector roads",-0.226642653749846
+"9","Local roads",0.143098130094639
+"10","Daily vehicle miles traveled",0.709480500876209
+"11","Miles of road",0.604882665921702
+"12","Mileage",0.544237246712606
+"13","Town square miles",0.0232027205432762
+"14","Town population",0.684828420404756
+"15","Population per square mile",0.54926432090089
+"16","Retail tax 2014",0.533449155374617
+"17","Total tax 2014",0.667005672176973
+"18","Total commuters",0.686446970601785
+"19","Total drivers",0.628617920949236
+"20","Drivers as a percent of commuters",-0.369369450483667
+"21","Drivers as a percent of total population",-0.324801535775771
+"22","Town median income",-0.19474868465479
+"23","Total traffic stops in 2014",0.832031425717885
+"24","Total tickets issued in 2014",1
+"25","Total warnings issued in 2014",0.363070991034074
+"26","Percent of tickets given out of all stops",0.707882759559085
+"27","Percent of warnings given out of all stops",-0.707882759559085
+"28","Sworn male officers",0.672824018261401
+"29","Sworn female officers",0.655131036220245
+"30","Total sworn officers",0.675070833550444
+"31","Total police department employees",0.684736088842182
