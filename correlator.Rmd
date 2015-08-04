@@ -9,15 +9,15 @@ An [analysis](http://trendct.github.io/ct-tickets/correlator.html) for the Trend
 
 The traffic ticket data is from the [Connecticut Racial Profiling Prohibition Project](http://ctrp3.ctdata.org/rawdata/) hosted at the [CT Data Collaborative](http://ctdata.org/) which collects traffic incident reports between October 2013 and September 2014.
 
-The [vehicle density](https://github.com/trendct/ct-tickets/data/blob/master/dmvt.csv) and [traffic count](https://github.com/trendct/ct-tickets/data/blob/master/traffic_count.csv) data is from the Department of Transportation.
+The [vehicle density](https://github.com/trendct/ct-tickets/data/blob/master/dmvt.csv) and [traffic count](https://github.com/trendct/ct-tickets/blob/master/data/traffic_count.csv) data is from the Department of Transportation.
 
-[Population](https://github.com/trendct/ctnamecleaner), [town area](https://github.com/trendct/ct-tickets/data/blob/master/area.csv), [commuter count](https://github.com/trendct/ct-tickets/data/blob/master/commuters.csv), and [median income](https://github.com/trendct/ct-tickets/data/blob/master/medianincome.csv) data is from the US Census.
+[Population](https://github.com/trendct/ctnamecleaner), [town area](https://github.com/trendct/ct-tickets/blob/master/data/area.csv), [commuter count](https://github.com/trendct/ct-tickets/blob/master/data/commuters.csv), and [median income](https://github.com/trendct/ct-tickets/blob/master/data/medianincome.csv) data is from the US Census.
 
-The business revenue and taxes [data](https://github.com/trendct/ct-tickets/data/blob/master/salestax.csv) is from the [Connecticut Data Portal](https://data.ct.gov/Government/Sales-and-Use-Tax-per-Town-by-NAICS-2013-and-2014-/rkm7-uwkb).
+The business revenue and taxes [data](https://github.com/trendct/ct-tickets/blob/master/data/salestax.csv) is from the [Connecticut Data Portal](https://data.ct.gov/Government/Sales-and-Use-Tax-per-Town-by-NAICS-2013-and-2014-/rkm7-uwkb).
 
-The Dunkin' Donuts [data](https://github.com/trendct/ct-tickets/data/blob/master/dunks.csv) was scraped from the Dunkin' Donuts website.
+The Dunkin' Donuts [data](https://github.com/trendct/ct-tickets/blob/master/data/dunks.csv) was scraped from the Dunkin' Donuts website.
 
-Just interested in the big joined Tickets dataframe? Here's the [data](https://github.com/trendct/ct-tickets/data/blob/master/big_tickets_dataframe.csv).
+Just interested in the big joined Tickets dataframe? Here's the [data](https://github.com/trendct/ct-tickets/blob/master/data/big_tickets_dataframe.csv).
 
 ```{r}
 library(stringr)
