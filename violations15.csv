@@ -1,0 +1,33 @@
+"","Var1","Var2","Freq"
+"1","","Ticket",9
+"2","Cell Phone","Ticket",10050
+"3","Defective Lights","Ticket",3580
+"4","Display of Plates","Ticket",1693
+"5","Equipment Violation","Ticket",212
+"6","Moving Violation","Ticket",7914
+"7","Other","Ticket",126
+"8","Other/Error","Ticket",32601
+"9","Registration","Ticket",19042
+"10","Seatbelt","Ticket",3627
+"11","Speed Related","Ticket",31828
+"12","Stop Sign","Ticket",5088
+"13","Stop Sign ","Ticket",1
+"14","Suspended License","Ticket",3327
+"15","Traffic Control Signal","Ticket",7167
+"16","Window Tint","Ticket",918
+"17","","Warning",67
+"18","Cell Phone","Warning",7240
+"19","Defective Lights","Warning",22651
+"20","Display of Plates","Warning",5230
+"21","Equipment Violation","Warning",550
+"22","Moving Violation","Warning",11589
+"23","Other","Warning",92
+"24","Other/Error","Warning",11721
+"25","Registration","Warning",5448
+"26","Seatbelt","Warning",1476
+"27","Speed Related","Warning",31164
+"28","Stop Sign","Warning",10810
+"29","Stop Sign ","Warning",0
+"30","Suspended License","Warning",334
+"31","Traffic Control Signal","Warning",12208
+"32","Window Tint","Warning",1642
